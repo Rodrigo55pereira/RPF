@@ -23,7 +23,7 @@
           <input matTooltip="XML Import" type="file" accept='text/xml' hidden #fileSelect
             (change)="onFileSelect($event)" />
           <br />
-          <button *ngIf="fileTypeValidate" mat-raised-button (click)="uploadFile()" color="warn">
+          <button *ngIf="fileTypeValidate && removeButtonLoad" mat-raised-button (click)="uploadFile()" color="warn">
             Carregar
             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-reply-fill" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
@@ -49,9 +49,14 @@
                   HEADER
                 </mat-panel-title>
               </mat-expansion-panel-header>
-              <ul *ngFor='let fixHeader of fixHeaderList'>
-                <li [ngClass]="{'required-color': fixHeader.required == 'Y'}">{{fixHeader.name}}</li>
-              </ul>
+              <div *ngFor='let fixHeader of fixHeaderList' style="margin-bottom: 7px;">
+                <mat-card>
+                  <mat-card-header>
+                    <mat-card-title matTooltip="{{fixHeader.type}}"
+                    matTooltipClass="size-font-tooltip" style="font-size: 15px;"[ngClass]="{'required-color': fixHeader.required == 'Y'}">{{fixHeader.name}} = {{fixHeader.number}}</mat-card-title>
+                  </mat-card-header>
+                </mat-card>
+              </div>
             </mat-expansion-panel>
           </mat-accordion>
         </mat-card-content>
