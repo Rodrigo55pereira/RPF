@@ -1,0 +1,26 @@
+<main role="main" class="container">
+  <div class="row" style="padding:3rem 1.5rem; text-align: center;">
+    <div class="col-12">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Upload XML</mat-card-title>
+        </mat-card-header>
+        <br/>
+        <mat-card-content>
+          <button color="primary" style="width: 30%;height: 50px; font-size: 20px;" mat-raised-button>Select
+            File</button>
+          <br /><br />
+          <div *ngIf="viewButton">
+            <h4>Selected File: Teste</h4>
+            <input type="file" hidden #fileSelect name="largeFile"/>
+              <br />
+            <button mat-raised-button  color="warn">
+              Upload
+            </button>
+          </div>
+            <br /><br />
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</main>
