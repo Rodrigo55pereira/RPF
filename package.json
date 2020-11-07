@@ -23,8 +23,10 @@
     "@angular/platform-browser-dynamic": "~10.2.0",
     "@angular/router": "~10.2.0",
     "bootstrap": "^4.5.3",
+    "bootstrap-icons": "^1.1.0",
     "highcharts": "^8.2.2",
     "highcharts-angular": "^2.8.2",
+    "ngx-xml2json": "^1.0.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

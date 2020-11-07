@@ -5,22 +5,68 @@
         <mat-card-header>
           <mat-card-title>Upload XML</mat-card-title>
         </mat-card-header>
-        <br/>
+        <br />
         <mat-card-content>
-          <button color="primary" style="width: 30%;height: 50px; font-size: 20px;" mat-raised-button>Select
-            File</button>
+          <button (click)="fileSelect.click()" color="primary" style="width: 30%;height: 50px; font-size: 20px;"
+            mat-raised-button>Selecionar arquivo
+            <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" class="bi bi-upload" fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+              <path fill-rule="evenodd"
+                d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
+            </svg>
+          </button>
           <br /><br />
-          <div *ngIf="viewButton">
-            <h4>Selected File: Teste</h4>
-            <input type="file" hidden #fileSelect name="largeFile"/>
-              <br />
-            <button mat-raised-button  color="warn">
-              Upload
-            </button>
-          </div>
-            <br /><br />
+          <h4 *ngIf="name && fileTypeValidate">File: <span style="color:brown">{{name}}</span></h4>
+          <h4 *ngIf="infoInvalidMessage" style="color:brown">Tipo do arquivo é inválido.</h4>
+          <input matTooltip="XML Import" type="file" accept='text/xml' hidden #fileSelect
+            (change)="onFileSelect($event)" />
+          <br />
+          <button *ngIf="fileTypeValidate" mat-raised-button (click)="uploadFile()" color="warn">
+            Carregar
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-reply-fill" fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M9.079 11.9l4.568-3.281a.719.719 0 0 0 0-1.238L9.079 4.1A.716.716 0 0 0 8 4.719V6c-1.5 0-6 0-7 8 2.5-4.5 7-4 7-4v1.281c0 .56.606.898 1.079.62z" />
+            </svg>
+          </button>
+          <br /><br />
         </mat-card-content>
       </mat-card>
     </div>
   </div>
 </main>
+<div class="container" *ngIf="fileTypeValidate && fixJson">
+  <div class="row" style="padding:1rem 1.5rem; text-align: center;">
+    <div class="col-12">
+      <mat-card>
+        <mat-card-content>
+          <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  HEADER
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ul *ngFor='let fixHeader of fixHeaderList'>
+                <li [ngClass]="{'required-color': fixHeader.required == 'Y'}">{{fixHeader.name}}</li>
+              </ul>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </mat-card-content>
+      </mat-card>
+      <br>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Messages</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ul *ngFor='let fixHeader of fixHeaderList'>
+            <li [ngClass]="{'required-color': fixHeader.required == 'N'}">{{fixHeader.name}}</li>
+          </ul>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
