@@ -23,7 +23,7 @@
           <input matTooltip="XML Import" type="file" accept='text/xml' hidden #fileSelect
             (change)="onFileSelect($event)" />
           <br />
-          <button *ngIf="fileTypeValidate && removeButtonLoad" mat-raised-button (click)="uploadFile()" color="warn">
+          <button *ngIf="fileTypeValidate" mat-raised-button (click)="uploadFile()" color="warn">
             Carregar
             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-reply-fill" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
@@ -40,6 +40,21 @@
 <div class="container" *ngIf="fileTypeValidate && fixJson">
   <div class="row" style="padding:1rem 1.5rem; text-align: center;">
     <div class="col-12">
+      <form class="fields-query-form">
+        <mat-form-field class="fields-query-full-width">
+          <input type="text"
+                 placeholder="All Fields:"
+                 aria-label="Number"
+                 matInput
+                 [formControl]="myControl"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
       <mat-card>
         <mat-card-content>
           <mat-accordion>
