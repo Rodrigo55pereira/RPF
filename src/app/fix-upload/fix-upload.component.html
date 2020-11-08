@@ -78,13 +78,24 @@
       </mat-card>
       <br>
       <mat-card>
-        <mat-card-header>
-          <mat-card-title>Messages</mat-card-title>
-        </mat-card-header>
         <mat-card-content>
-          <ul *ngFor='let fixHeader of fixHeaderList'>
-            <li [ngClass]="{'required-color': fixHeader.required == 'N'}">{{fixHeader.name}}</li>
-          </ul>
+          <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  TRAILER - RODAPÉ
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div *ngFor='let fixTrailer of fixTrailerList' style="margin-bottom: 7px;">
+                <mat-card>
+                  <mat-card-header>
+                    <mat-card-title matTooltip="{{fixTrailer.name}}"
+                    matTooltipClass="size-font-tooltip" style="font-size: 15px;"[ngClass]="{'required-color': fixTrailer.required == 'Y'}">{{fixTrailer.name}}</mat-card-title>
+                  </mat-card-header>
+                </mat-card>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
         </mat-card-content>
       </mat-card>
     </div>

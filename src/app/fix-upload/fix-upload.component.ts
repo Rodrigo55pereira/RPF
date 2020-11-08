@@ -18,11 +18,13 @@ export class FixUploadComponent implements OnInit {
   public fixJson;
   public fixJsonHeaders;
   public fixJsonFields;
+  public fixJsonTrailer;
   public fileTypeValidate = false;
   public infoInvalidMessage = false;
   public ngxXml2jsonService: NgxXml2jsonService;
   public fixHeaderList = [];
   public fixFieldsList = [];
+  public fixTrailerList = [];
   public panelOpenState = false;
   public myControl = new FormControl();
   public filteredOptions: Observable<string[]>;
@@ -34,10 +36,10 @@ export class FixUploadComponent implements OnInit {
 
   ngOnInit() {
     this.filteredOptions = this.myControl.valueChanges
-    .pipe(
-      startWith(''),
-      map(value => this._filter(value))
-    );
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
   }
 
   private _filter(value: string): string[] {
@@ -66,6 +68,7 @@ export class FixUploadComponent implements OnInit {
       this.fixJson = this.convertXmlToJson(xmlDoc);
       this.fixJsonHeaders = this.fixJson.fix.header.field;
       this.fixJsonFields = this.fixJson.fix.fields.field;
+      this.fixJsonTrailer = this.fixJson.fix.trailer.field;
 
       // FIX FIELDS
       for (let i = 0; i < this.fixJsonFields.length; i++) {
@@ -74,11 +77,17 @@ export class FixUploadComponent implements OnInit {
         } else {
           this.fixFieldsList.push(this.fixJsonFields[i]['@attributes']);
         }
-        this.filterField.push(this.fixJsonFields[i]['@attributes'].number
-        + ' - '
-        + this.fixJsonFields[i]['@attributes'].name
-        + ' - '
-        + this.fixJsonFields[i]['@attributes'].type);
+
+        let valueList = this.fixJsonFields[i]['@attributes'].number
+          + ' - '
+          + this.fixJsonFields[i]['@attributes'].name
+          + ' - '
+          + this.fixJsonFields[i]['@attributes'].type;
+
+        if (this.fixJsonFields[i]['value']) {
+          valueList = valueList.concat(' - V');
+        }
+        this.filterField.push(valueList);
 
       }
       // FIX HEAD
@@ -90,8 +99,10 @@ export class FixUploadComponent implements OnInit {
           this.fixHeaderList[i]["type"] = queryResult.type;
         }
       }
-      //this.fixHeader = this.fixJson.fix.header.field[0]['@attributes'];
-      //console.log(this.fixHeader);
+      // FIX TRAILER
+      for (let i = 0; i < this.fixJsonTrailer.length; i++) {
+        this.fixTrailerList.push(this.fixJsonTrailer[i]['@attributes']);
+      }
     }
   }
 
