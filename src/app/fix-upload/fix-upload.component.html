@@ -18,8 +18,8 @@
             </svg>
           </button>
           <br /><br />
-          <h4 *ngIf="name && fileTypeValidate">File: <span style="color:brown">{{name}}</span></h4>
-          <h4 *ngIf="infoInvalidMessage" style="color:brown">Tipo do arquivo é inválido.</h4>
+          <h4 *ngIf="name && fileTypeValidate">File: <span style="color:#ffa9a9">{{name}}</span></h4>
+          <h4 *ngIf="infoInvalidMessage" style="color:#ffa9a9">Tipo do arquivo é inválido.</h4>
           <input matTooltip="XML Import" type="file" accept='text/xml' hidden #fileSelect
             (change)="onFileSelect($event)" />
           <br />
@@ -43,7 +43,7 @@
       <form class="fields-query-form">
         <mat-form-field class="fields-query-full-width">
           <input type="text"
-                 placeholder="All Fields:"
+                 placeholder="Search Fields:"
                  aria-label="Number"
                  matInput
                  [formControl]="myControl"
